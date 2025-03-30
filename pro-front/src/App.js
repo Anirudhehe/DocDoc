@@ -1,9 +1,27 @@
 import logo from './logo.svg';
+import { useRef } from 'react';
 import './App.css';
 
 function App() {
+  const fileInputRef = useRef(null);
+
+  const handleFileIconClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Handle the file upload here
+      console.log('Selected file:', file.name);
+    }
+  };
+
   return (
     <div className="App">
+      <div className="floating-circle circle-1"></div>
+      <div className="floating-circle circle-2"></div>
+      <div className="floating-circle circle-3"></div>
       <div className="hero-section">
         <div className="title-container">
           <h1>
@@ -18,7 +36,7 @@ function App() {
         </div>
         <p className="subtitle">Structure, select, and download instantly.</p>
         <div className="search-container">
-          <div className="file-icon">
+          <div className="file-icon" onClick={handleFileIconClick} role="button" tabIndex={0}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#4A90E2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M14 2V8H20" stroke="#4A90E2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -26,6 +44,13 @@ function App() {
               <path d="M9 15H15" stroke="#4A90E2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            className="file-input" 
+            onChange={handleFileChange}
+            accept=".pdf,.doc,.docx,.txt"
+          />
           <select className="document-dropdown">
             <option value="" disabled selected>Select Document</option>
             <option value="invoice">Invoice</option>
@@ -33,7 +58,7 @@ function App() {
             <option value="report">Report</option>
             <option value="letter">Letter</option>
           </select>
-          <button className="generate-button">Generate</button>
+        <button className="generate-button">Generate</button>
         </div>
       </div>
     </div>
